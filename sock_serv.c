@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
   const int port = atoi(argv[2]);
   
   // Step 1: create a socket.
-  int sock = make_conn_socket(hostname, port);
+  int sock = make_serv_socket(port);
   if (sock < 0) {
     printf("Couldnt create socket\n");
     return 1;
