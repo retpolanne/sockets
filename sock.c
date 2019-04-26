@@ -7,8 +7,16 @@
 #include <netdb.h>
 #include <unistd.h>
 
-// Example taken from
-// https://www.gnu.org/software/libc/manual/html_node/Inet-Example.html
+
+/* init_sockaddr will init a sockaddr_in pointer. It queries the IP from the
+   hostname.
+
+   It receives a pointer to a sockaddr_in, a pointer to a char containing the
+   hostname and a uint16_t containing the TCP port.
+   
+   Example taken from
+   https://www.gnu.org/software/libc/manual/html_node/Inet-Example.html
+*/
 void init_sockaddr (
   struct sockaddr_in *name,
   const char *hostname,
@@ -26,7 +34,16 @@ void init_sockaddr (
   name->sin_addr = *(struct in_addr *) hostinfo->h_addr;
 }
 
-// Example mostly taken from https://en.wikibooks.org/wiki/C_Programming/Networking_in_UNIX
+/* make_socket creates a socket.
+   
+   It receives a pointer to a char containing the hostname and a uint16_t
+   containing the TCP port. 
+
+   It gets the sockaddr_in from init_sockaddr and creates the socket.  
+
+   Example mostly taken from 
+   https://en.wikibooks.org/wiki/C_Programming/Networking_in_UNIX
+*/
 int make_socket(char *hostname, uint16_t port) {
   // Getting the sockaddr_in for a hostname
   struct sockaddr_in target_addr;
