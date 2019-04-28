@@ -75,7 +75,9 @@ int make_conn_socket(char *hostname, uint16_t port) {
 */
 int make_serv_socket(uint16_t port) {
   struct sockaddr_in target_sockaddr;
-  init_sockaddr(&target_sockaddr, INADDR_ANY, port);
+  struct in_addr target_in_addr;
+  target_in_addr.s_addr = htonl(INADDR_ANY);
+  init_sockaddr(&target_sockaddr, &target_in_addr, port);
 
   int sock = socket(PF_INET, SOCK_STREAM, 0);
   if (bind(sock,
@@ -88,5 +90,10 @@ int make_serv_socket(uint16_t port) {
     printf("Error listening on socket fd %d\n", sock);
   }
   printf("Server is listening on port %d\n", port);
-  return accept(sock, (struct sockaddr *)NULL, NULL);
+  return sock;
 }
+
+int make_server_socket_loop(int sock) {
+  return accept(sock, (struct sockaddr *)NULL, NULL);  
+}
+
